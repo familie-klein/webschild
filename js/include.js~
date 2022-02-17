@@ -1,0 +1,10 @@
+
+function myFunction() {
+  window.print();
+}
+
+$(document).ready(function() 
+	{ 
+		$("#myTable").tablesorter(); 
+	} 
+	);

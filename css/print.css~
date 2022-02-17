@@ -1,0 +1,47 @@
+<style type="text/css" media="print">
+
+.no-print { 
+   display: none;
+}
+
+
+@page { 
+	
+}
+
+
+@media print {
+	
+	body{	 
+		font-family: Arial, serif;
+		
+	}
+	
+	a[href]:after {
+    content: none !important;
+   }
+
+	.table, th, tr, td {
+		font-size: 10pt;        
+        
+        border-collapse:collapse; 
+    }
+    
+	tr td{
+  		padding: 1px !important;
+
+	}
+	
+	h1 { 
+		font-size: 16pt; 
+	}
+	h2 { 
+		font-size: 14pt; 
+	}
+	h3 { 
+		font-size: 13pt; 
+	 }
+}
+  	</style> 
+	
+  
