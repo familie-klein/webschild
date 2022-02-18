@@ -3,7 +3,7 @@ include('includes/header.inc.php');
 
 try 
 	{
-		$result = $database->query("SELECT * FROM schueler WHERE Status LIKE '2' AND Geloescht LIKE '-' ");
+		$result = $database->query("SELECT * FROM Schueler WHERE Status LIKE '2' AND Geloescht LIKE '-' ");
 	}
 	catch (DatabaseException $e) 
 	{

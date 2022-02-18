@@ -1,10 +1,13 @@
 <?php session_start(); 
 require_once ('dbconnect.inc.php');
 require_once ('functions.inc.php');
-require_once ('includes/db_functions.inc.php');
+//require_once ('includes/db_functions.inc.php');
 require_once ('config.inc.php');
+require_once ('ldap.inc.php');
 $loc_de = setlocale(LC_ALL,  'de_DE.utf-8', 'de_DE@euro', 'de_DE.iso885915@euro', 'de_DE', 'deu_deu');
 date_default_timezone_set('UTC');
+
+
 
 
 // login Bearbeitung: Gegen Datenbank checken und in session registrieren
@@ -51,31 +54,35 @@ if (isset ($_POST['login']) )
 	{
 		$username = $_POST['username'];
 		$password_clear = $_POST['password'];
-		
-		$password = schild_crypt($password_clear);
-		
 
+		# das alte Verschlüsselungsverfahren 
+		# $password = schild_crypt($password_clear);
+
+				
+		
 		//userdaten holen ...
 		try 
 		{
-			$result = $database->query("SELECT * FROM `users` WHERE US_LoginName='$username'");
+			$result = $database->query("SELECT * FROM `Users` WHERE US_LoginName='$username'");
 		}
 		catch (DatabaseException $e) 
 		{
 			echo ("Keine Datenbankabfrage möglich.");
 			die;
-    	}
+    		}
 
 		$i=0;
 
 		//$row = mysql_fetch_row($result);
 		while ($obj = $database->fetchObject ($result) ) 
 		{
-
+		
 			$i++;
 			//username festsetzen ...
-			if($obj->US_Password != $password) 
+		 
+			if(!password_verify($password_clear, $obj->US_PasswordHash)) 
 			{
+
 				//Fehlermeldung: Falsches Passwort!
 				sleep(4);				
 				echo 
@@ -103,7 +110,9 @@ if (isset ($_POST['login']) )
 						<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 						<script type="text/javascript" src="js/insert.js"></script>
 						<script type="text/javascript" src="js/include.js"></script>
-						<div class="container theme-showcase" role="main"><h3>Passwort falsch!</h3>
+						<div class="container theme-showcase" role="main">
+							
+							<h3>Passwort falsch!</h3>
 						<a href="index.php"><button type="button" class="btn btn-info pull-left">zurück zur Anmeldung</button></a>
 						</div>
 					</body>
@@ -129,17 +138,20 @@ if (isset ($_POST['login']) )
 
 		if ($i == 0)
 		{
-			//Fehlermeldung: Benutzer unbekannt!
+			
 
-			//fallback auf einen anderen Authenifizierungsmodus: Über aufgebohrte Ldap authentifizeirung per json-objekt
-			//spezialentwicklung für die Marienschule MG
+			// Fallback auf einen anderen Authenifizierungsmodus: Über aufgebohrte Ldap Authentifizeirung per Json-objekt
+			// Spezialentwicklung für die Marienschule MG
+			// Hier wird durch Aufruf einer url geprüft, ob der user in einem AD-Server eingetragen ist, typischerweise im pädagogischen Netz 
+			// Dies muss natürlich über einen weiteren Server im päd. netz eingerichtet werden. (Achtung: ggf entstehen Sicherheitslücken im päd Netz)
+			// Abgleich mit Schilddaten über Vor und Nachnamen (ja: das ist nicht eindeutig! Sorry!) 
 		
 			
 
 
-			$_url = "https://lernen.marienschule.de/login/get_name.php";
+			
 		 	$_buffer = HomepageLaden($_url, "username=". $_POST['username'] ."&password=". $_POST['password'] ."&status=lehrer");
-		    $userdata=json_decode($_buffer); 
+		    	$userdata=json_decode($_buffer); 
 			if (!urlExists($_url) )
 				{
 				echo
@@ -166,7 +178,10 @@ if (isset ($_POST['login']) )
 						<script type="text/javascript" src="js/bootstrap.min.js"></script> 
 						<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 						<script type="text/javascript" src="js/include.js"></script>
-						<div class="container theme-showcase" role="main"><h3>Keine Internetverbindung zum Anmeldeserver</h3>
+						<div class="container theme-showcase" role="main">
+						
+							<h3>Keine Internetverbindung zum Anmeldeserver</h3>
+						
 						<a href="index.php"><button type="button" class="btn btn-info pull-left">zurück zur Anmeldung</button></a>
 						</div>
 					</body>
@@ -176,9 +191,6 @@ if (isset ($_POST['login']) )
 
 				}
 
-			//echo "<pre>";	
-			//print_r($userdata);
-			//echo "</pre>";
 
 
 			if ($userdata->login == '1')
@@ -191,7 +203,7 @@ if (isset ($_POST['login']) )
 					//Daten aus der Mysql-db holen
 					try 
 					{
-						$result = $database->query("SELECT * FROM k_lehrer WHERE sichtbar='+' AND Vorname='".$userdata->givenname ."'AND Nachname='".$userdata->sn."'");
+						$result = $database->query("SELECT * FROM K_Lehrer WHERE Sichtbar='+' AND Vorname='".$userdata->givenname ."'AND Nachname='".$userdata->sn."'");
 					}
 					catch (DatabaseException $e) 
 					{
@@ -216,6 +228,7 @@ if (isset ($_POST['login']) )
 				//********************************************
 
 				sleep(4);
+				
 				echo
 					('
 					<html lang="de">
@@ -240,7 +253,11 @@ if (isset ($_POST['login']) )
 						<script type="text/javascript" src="js/bootstrap.min.js"></script> 
 						<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 						<script type="text/javascript" src="js/include.js"></script>
-						<div class="container theme-showcase" role="main"><h3>Benutzer unbekannt bzw. Passwort falsch!</h3>
+						<div class="container theme-showcase" role="main">
+						
+							<h3>Benutzer unbekannt bzw. Passwort falsch!</h3>
+							
+							
 						<a href="index.php"><button type="button" class="btn btn-info pull-left">zurück zur Anmeldung</button></a>
 						</div>
 					</body>

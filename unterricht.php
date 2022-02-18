@@ -18,7 +18,7 @@ if(($eingabe == true))
 	{
 		$_SESSION['zensurenliste'] = update_zensurenliste($database,$_SESSION['zensurenliste']);
 		// nur Noten und Fehlstunden aus performance Gründen aktualisieren:
-		$result = $database->query("SELECT * FROM schuelerleistungsdaten WHERE FachLehrer='". $lehrer->Kuerzel ."';");	
+		$result = $database->query("SELECT * FROM SchuelerLeistungsdaten WHERE FachLehrer='". $lehrer->Kuerzel ."';");	
 		while ($obj = $database->fetchObject ($result) ) 
 		{
 				$_SESSION['zensurenliste'][$obj->ID][NotenKrz] = $obj->NotenKrz;
@@ -68,7 +68,7 @@ if(($eingabe == true))
 		//Daten aus der Mysql-db holen
 		try 
 		{
-			$result = $database->query("SELECT * FROM kurse WHERE ID LIKE '".$kursID['Kurs_ID']."';");
+			$result = $database->query("SELECT * FROM Kurse WHERE ID LIKE '".$kursID['Kurs_ID']."';");
 		}
 		catch (DatabaseException $e) 
 		{

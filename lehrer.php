@@ -6,8 +6,8 @@ require_once ('includes/header.inc.php');
 	try 
 	{
 		//warum auch immer lässt er nur eine Abfrageauswertung zu ... 
-		$result = $database->query("SELECT * FROM k_lehrer WHERE sichtbar='+'");
-		$result2 = $database->query("SELECT * FROM k_lehrer WHERE sichtbar='+'");
+		$result = $database->query("SELECT * FROM K_Lehrer WHERE Sichtbar='+'");
+		$result2 = $database->query("SELECT * FROM K_Lehrer WHERE Sichtbar='+'");
 	}
 	catch (DatabaseException $e) 
 	{

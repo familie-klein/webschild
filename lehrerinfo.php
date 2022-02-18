@@ -4,7 +4,7 @@ require_once ('includes/header.inc.php');
 //Daten aus der Mysql-db holen
 	try 
 	{
-		$result = $database->query("SELECT * FROM k_lehrer WHERE ID='" .$_GET['id']. "'");
+		$result = $database->query("SELECT * FROM K_Lehrer WHERE ID='" .$_GET['id']. "'");
 	}
 	catch (DatabaseException $e) 
 	{

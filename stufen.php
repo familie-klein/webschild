@@ -31,7 +31,7 @@ if($_GET['jahrgang'])
 	//Daten aus der Mysql-db holen
 	try 
 	{
-		$result = $database->query("SELECT * FROM schueler WHERE ASDJahrgang LIKE '".$_GET['jahrgang']."' AND Status LIKE '2' AND Geloescht LIKE '-' ");
+		$result = $database->query("SELECT * FROM Schueler WHERE ASDJahrgang LIKE '".$_GET['jahrgang']."' AND Status LIKE '2' AND Geloescht LIKE '-' ");
 	}
 	catch (DatabaseException $e) 
 	{

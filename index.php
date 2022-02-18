@@ -16,7 +16,7 @@ if (strlen($_GET['q'])>2)
 	//Abfrage der Schülertabelle
 	try 
 	{
-		$result = $database->query("SELECT Name, Vorname, ID, Klasse FROM schueler WHERE Status LIKE '2' AND Geloescht LIKE '-' AND ( Name LIKE '".$searchsql."%' OR Vorname LIKE '".$searchsql."%' )");
+		$result = $database->query("SELECT Name, Vorname, ID, Klasse FROM Schueler WHERE Status LIKE '2' AND Geloescht LIKE '-' AND ( Name LIKE '".$searchsql."%' OR Vorname LIKE '".$searchsql."%' )");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -36,7 +36,7 @@ if (strlen($_GET['q'])>2)
 	//Abfrage der lehrertabelle
 	try 
 	{
-		$result = $database->query("SELECT Nachname, Vorname, ID FROM k_lehrer WHERE sichtbar='+'  AND ( Nachname LIKE '".$searchsql."%' OR Vorname LIKE '".$searchsql."%' )  ");
+		$result = $database->query("SELECT Nachname, Vorname, ID FROM K_Lehrer WHERE Sichtbar='+'  AND ( Nachname LIKE '".$searchsql."%' OR Vorname LIKE '".$searchsql."%' )  ");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -53,10 +53,10 @@ if (strlen($_GET['q'])>2)
 	asort($lehrerliste);
 
 	//Abfrage der Eltern
-//"SELECT ID, Schueler_ID, Name1, Vorname1, Name2, Vorname2 FROM schuelererzadr WHERE Name1 LIKE '".$sql_search."' OR Vorname1 LIKE '".$sql_search."' OR Name2 LIKE '".$sql_search."' OR Vorname2 LIKE '".$sql_search."' ORDER BY ".$sortierung."", $DatabasePointer);	
+//"SELECT ID, Schueler_ID, Name1, Vorname1, Name2, Vorname2 FROM SchuelerErzAdr WHERE Name1 LIKE '".$sql_search."' OR Vorname1 LIKE '".$sql_search."' OR Name2 LIKE '".$sql_search."' OR Vorname2 LIKE '".$sql_search."' ORDER BY ".$sortierung."", $DatabasePointer);	
 	try 
 	{
-		$result = $database->query("SELECT ID, Schueler_ID, Name1, Vorname1, Name2, Vorname2 FROM schuelererzadr WHERE Name1 LIKE '".$searchsql."%' OR Vorname1 LIKE '".$searchsql."%' OR Name2 LIKE '".$searchsql."%' OR Vorname2 LIKE '".$searchsql."%' ");
+		$result = $database->query("SELECT ID, Schueler_ID, Name1, Vorname1, Name2, Vorname2 FROM SchuelerErzAdr WHERE Name1 LIKE '".$searchsql."%' OR Vorname1 LIKE '".$searchsql."%' OR Name2 LIKE '".$searchsql."%' OR Vorname2 LIKE '".$searchsql."%' ");
 	}
 	catch (DatabaseException $e) 
 	{

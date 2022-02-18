@@ -45,7 +45,7 @@
 	//schüler-Daten aus der Mysql-db holen
 	try 
 	{
-		$result = $database->query("SELECT * FROM schueler WHERE ID='" .$_GET['id']. "'");
+		$result = $database->query("SELECT * FROM Schueler WHERE ID='" .$_GET['id']. "'");
 		$obj =  $database->fetchObject ($result);
 	}
 	catch (DatabaseException $e) 
@@ -68,7 +68,7 @@
 	//elterninformationen abfragen: 
 	try 
 	{
-		$result = $database->query("SELECT * FROM schuelererzadr WHERE Schueler_ID LIKE '" .$_GET['id']. "'");
+		$result = $database->query("SELECT * FROM SchuelerErzAdr WHERE Schueler_ID LIKE '" .$_GET['id']. "'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -99,7 +99,7 @@
 	//telefonnummern abfragen: 
 	try 
 	{
-		$result = $database->query("SELECT * FROM schuelertelefone WHERE Schueler_ID LIKE '" .$_GET['id']. "'");
+		$result = $database->query("SELECT * FROM SchuelerTelefone WHERE Schueler_ID LIKE '" .$_GET['id']. "'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -121,7 +121,7 @@
 	{
 		//[TODO]: die Datenbankabfrage liefert nur den letzten Zurück ... doof ... die alte Abfrage läuft auch nicht mit der PDO-classe. 
 		//$DatabasePointer = mysql_connect($db_host, $db_user, $db_pass);
-		//$ResPointer = mysql_query("SELECT * FROM schuelerlernabschnittsdaten WHERE Schueler_ID='".$schueler_ID."'", $DatabasePointer);
+		//$ResPointer = mysql_query("SELECT * FROM SchuelerLernabschnittsdaten WHERE Schueler_ID='".$schueler_ID."'", $DatabasePointer);
 		//$treffer = mysql_num_rows($ResPointer);
 	}
 	catch (DatabaseException $e) 

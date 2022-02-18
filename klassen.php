@@ -30,7 +30,7 @@ if($_GET['klasse'])
 {
 
 
-  	$mysqlquery = "SELECT * FROM schueler WHERE Klasse LIKE '".$_GET['klasse']."' AND Status LIKE '2' AND Geloescht LIKE '-'  ";
+  	$mysqlquery = "SELECT * FROM Schueler WHERE Klasse LIKE '".$_GET['klasse']."' AND Status LIKE '2' AND Geloescht LIKE '-'  ";
 	$spalten = array('Telefon','Geschlecht','Geburtsdatum');	
 	$liste = schuelerDbAbfrage($database,$mysqlquery,$spalten);
 	$liste = array_sort_german2($liste);
@@ -39,6 +39,8 @@ if($_GET['klasse'])
 	$_SESSION['liste'] = $liste;
 
 			
+			
+	
 
 	$klasse=$_GET['klasse'];
 

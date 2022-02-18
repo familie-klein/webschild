@@ -11,7 +11,7 @@ if ($_SESSION['username'] == 'Admin')
 // -> die variable $eingabe wird entsprechend gesetzt
 try 
 	{
-		$result = $database->query("SELECT NotenGesperrt FROM eigeneschule ");
+		$result = $database->query("SELECT NotenGesperrt FROM EigeneSchule ");
 	}
 	catch (DatabaseException $e) 
 	{

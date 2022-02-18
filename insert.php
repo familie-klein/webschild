@@ -59,7 +59,7 @@ if ($_POST['mysql-table'])
 						{		
 						
 							//Sql Befehl wird zusammengesetzt: 
-							$sql = "UPDATE `schuelerleistungsdaten` SET `NotenKrz` = '". $value. "' WHERE `schuelerleistungsdaten`.`ID` = ". $id .";";		
+							$sql = "UPDATE `SchuelerLeistungsdaten` SET `NotenKrz` = '". $value. "' WHERE `SchuelerLeistungsdaten`.`ID` = ". $id .";";		
 							//in die Datenbank schreiben:		
 							$result = $database -> query($sql);
 							//counter für die Rückmeldung:
@@ -68,7 +68,7 @@ if ($_POST['mysql-table'])
 						elseif ($varname == 'Fehlstd')
 						{
 							//Sql Befehl wird zusammengesetzt: 
-							$sql = "UPDATE `schuelerleistungsdaten` SET `Fehlstd` = '". $value. "' WHERE `schuelerleistungsdaten`.`ID` = ". $id .";";		
+							$sql = "UPDATE `SchuelerLeistungsdaten` SET `Fehlstd` = '". $value. "' WHERE `SchuelerLeistungsdaten`.`ID` = ". $id .";";		
 							//in die Datenbank schreiben:		
 							$result = $database -> query($sql);
 							//counter für die Rückmeldung:
@@ -77,7 +77,7 @@ if ($_POST['mysql-table'])
 						elseif ($varname == 'uFehlstd')
 						{
 							//Sql Befehl wird zusammengesetzt: 
-							$sql = "UPDATE `schuelerleistungsdaten` SET `uFehlstd` = '". $value. "' WHERE `schuelerleistungsdaten`.`ID` = ". $id .";";		
+							$sql = "UPDATE `SchuelerLeistungsdaten` SET `uFehlstd` = '". $value. "' WHERE `SchuelerLeistungsdaten`.`ID` = ". $id .";";		
 							//in die Datenbank schreiben:		
 							$result = $database -> query($sql);
 							//counter für die Rückmeldung:
@@ -90,9 +90,10 @@ if ($_POST['mysql-table'])
 							{		
 								//TODO:							
 								//nur speichern, wenn änderungen durchgeführt wurden. 
-								$sql = "INSERT INTO `webschild_teilnoten` (`id`, `noten_id`, `timecode`, `note`, `notentyp`, `lehrer`) VALUES (NULL, '". $id ."', CURRENT_TIMESTAMP, '". $value. "', '". $varname ."','". $_SESSION['krz'] ."');;";		
+								// auskommentiert, weil Schild NRW die Funktion mittlerweile anders bedient
+								//$sql = "INSERT INTO `webschild_teilnoten` (`id`, `noten_id`, `timecode`, `note`, `notentyp`, `lehrer`) VALUES (NULL, '". $id ."', CURRENT_TIMESTAMP, '". $value. "', '". $varname ."','". $_SESSION['krz'] ."');;";		
 								//in die Datenbank schreiben:		
-								$result = $database -> query($sql);
+								//$result = $database -> query($sql);
 								$teilnoteneintrag++;
 							}
 						}

@@ -1,0 +1,6 @@
+<?php
+ $db_host = 'localhost';
+ $db_user = 'schild' ;
+ $db_pass = '41069eisen'; 
+ $db_name = 'marienschule'; 
+?>

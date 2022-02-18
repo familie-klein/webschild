@@ -57,7 +57,7 @@
 						//Daten aus der Mysql-db holen
 						try 
 						{
-							$result = $database->query("SELECT * FROM kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND Jahrgang_ID IS NULL;");
+							$result = $database->query("SELECT * FROM Kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND Jahrgang_ID IS NULL;");
 						}
 						catch (DatabaseException $e) 
 						{
@@ -74,7 +74,7 @@
 						//Daten aus der Mysql-db holen
 						try 
 						{
-							$result = $database->query("SELECT * FROM kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND ASDJahrgang LIKE '". $_GET["jahrgangsstufe"] ."';");
+							$result = $database->query("SELECT * FROM Kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND ASDJahrgang LIKE '". $_GET["jahrgangsstufe"] ."';");
 						}
 						catch (DatabaseException $e) 
 						{
@@ -91,7 +91,7 @@
 					//Daten aus der Mysql-db holen
 					try 
 					{
-						$result = $database->query("SELECT * FROM kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND KurzBez LIKE '". $_GET["kurssuche"] ."%';");
+						$result = $database->query("SELECT * FROM Kurse WHERE Jahr LIKE '".$_SESSION['schuljahr']."' AND Abschnitt LIKE '".$_SESSION['abschnitt'] ."'AND KurzBez LIKE '". $_GET["kurssuche"] ."%';");
 					}
 					catch (DatabaseException $e) 
 					{
@@ -124,7 +124,7 @@
 				//kursbezeichnung holen, falls das skript extern aufgerufen wurde ... 
 				try 
 					{
-						$query = "SELECT * FROM kurse WHERE ID LIKE '". $_GET["id"]."';";
+						$query = "SELECT * FROM Kurse WHERE ID LIKE '". $_GET["id"]."';";
 						$result = $database->query($query);
 					}
 					catch (DatabaseException $e) 
@@ -141,7 +141,7 @@
 				//rekursivabfrage: Abschnitt_ID in den Leistungsdaten ist die Eindeutige ID in der Tabelle Schülerabschnittsdaten
 				try 
 					{
-						$query = 'SELECT Abschnitt_ID, Kurs_ID, Kursart FROM schuelerleistungsdaten WHERE Kurs_ID=' . $_GET["id"];
+						$query = 'SELECT Abschnitt_ID, Kurs_ID, Kursart FROM SchuelerLeistungsdaten WHERE Kurs_ID=' . $_GET["id"];
 						$result = $database->query($query);
 					}
 					catch (DatabaseException $e) 
@@ -154,7 +154,7 @@
 						$kursart = $obj->Kursart;
 					try 
 					{
-						$query = "SELECT ID, Schueler_ID FROM schuelerlernabschnittsdaten WHERE ID='". $obj->Abschnitt_ID ."'";
+						$query = "SELECT ID, Schueler_ID FROM SchuelerLernabschnittsdaten WHERE ID='". $obj->Abschnitt_ID ."'";
 						$result2 = $database->query($query);
 					}
 					catch (DatabaseException $e) 
@@ -166,7 +166,7 @@
 					//Schülerdaten aus der Mysql-db holen
 					try 
 						{
-							$result3 = $database->query("SELECT * FROM schueler WHERE ID LIKE '".$obj->Schueler_ID."' AND Status LIKE '2' AND Geloescht LIKE '-' ORDER BY Name");
+							$result3 = $database->query("SELECT * FROM Schueler WHERE ID LIKE '".$obj->Schueler_ID."' AND Status LIKE '2' AND Geloescht LIKE '-' ORDER BY Name");
 						}
 						catch (DatabaseException $e) 
 						{

@@ -8,7 +8,7 @@
 	
 	try 
 	{
-		$result = $database->query("SELECT Bezeichnung1, Bezeichnung2, SchulNr, Schuljahr, SchuljahrAbschnitt FROM eigeneschule ");
+		$result = $database->query("SELECT Bezeichnung1, Bezeichnung2, SchulNr, Schuljahr, SchuljahrAbschnitt FROM EigeneSchule ");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -29,7 +29,7 @@
 	//************************************ Array mit Fach_ID und Fachbezeichnung erstellen ***************************************
 	try 
 	{
-		$result = $database->query("SELECT ID, FachKrz, Sichtbar FROM eigeneschule_faecher WHERE Sichtbar='+'");
+		$result = $database->query("SELECT ID, FachKrz, Sichtbar FROM EigeneSchule_Faecher WHERE Sichtbar='+'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -46,7 +46,7 @@
 
 	try 
 	{
-		$result = $database->query("SELECT InternKrz, ASDJahrgang , Sichtbar FROM eigeneschule_jahrgaenge WHERE Sichtbar='+'");
+		$result = $database->query("SELECT InternKrz, ASDJahrgang , Sichtbar FROM EigeneSchule_Jahrgaenge WHERE Sichtbar='+'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -63,7 +63,7 @@
 
 	try 
 	{
-		$result = $database->query("SELECT Klasse, Bezeichnung, sichtbar, KlassenlehrerKrz, StvKlassenlehrerKrz FROM versetzung WHERE sichtbar='+'");
+		$result = $database->query("SELECT Klasse, Bezeichnung, Sichtbar, KlassenlehrerKrz, StvKlassenlehrerKrz FROM Versetzung WHERE Sichtbar='+'");
 	}
 	catch (DatabaseException $e) 
 	{

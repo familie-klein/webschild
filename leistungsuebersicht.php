@@ -26,7 +26,7 @@ if($_GET['klasse'])
 	
 	try 
 	{
-		$result = $database->query("SELECT * FROM schueler WHERE Klasse LIKE '". $_GET['klasse'] ."' AND Status LIKE '2' AND Geloescht LIKE '-' ");
+		$result = $database->query("SELECT * FROM Schueler WHERE Klasse LIKE '". $_GET['klasse'] ."' AND Status LIKE '2' AND Geloescht LIKE '-' ");
 	}
 	catch (DatabaseException $e) 	
 	{

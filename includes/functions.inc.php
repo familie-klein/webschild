@@ -782,7 +782,7 @@ function plz_to_ort ($database,$plz)
 {
 	try	
 	{
-		$result = $database->query("SELECT Bezeichnung FROM k_ort WHERE PLZ='" .$plz. "'");
+		$result = $database->query("SELECT Bezeichnung FROM K_Ort WHERE PLZ='" .$plz. "'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -799,7 +799,7 @@ function telnummerid_to_text ($database,$id)
 {
 	try	
 	{
-		$result = $database->query("SELECT Bezeichnung FROM k_telefonart WHERE id='" .$id. "'");
+		$result = $database->query("SELECT Bezeichnung FROM K_Telefonart WHERE ID='" .$id. "'");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -833,7 +833,7 @@ function zensurenliste_erstellen ($database,$lehrer_kuerzel,$schuljahr,$abschnit
   //Kursbezeichnungen herausfiltern
 	try 
 	{
-		$result = $database->query("SELECT * FROM kurse WHERE Jahr LIKE '".$schuljahr."' AND Abschnitt LIKE '".$abschnitt ."'AND LehrerKrz LIKE '".$lehrer_kuerzel."';");
+		$result = $database->query("SELECT * FROM Kurse WHERE Jahr LIKE '".$schuljahr."' AND Abschnitt LIKE '".$abschnitt ."'AND LehrerKrz LIKE '".$lehrer_kuerzel."';");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -852,7 +852,7 @@ function zensurenliste_erstellen ($database,$lehrer_kuerzel,$schuljahr,$abschnit
 	// alle Leistungsdaten des Lehrers herausfiltern
 	try 
 	{
-		$result = $database->query("SELECT * FROM schuelerleistungsdaten WHERE FachLehrer='". $lehrer_kuerzel ."';");
+		$result = $database->query("SELECT * FROM SchuelerLeistungsdaten WHERE FachLehrer='". $lehrer_kuerzel ."';");
 	}
 	catch (DatabaseException $e) 
 	{
@@ -862,14 +862,14 @@ function zensurenliste_erstellen ($database,$lehrer_kuerzel,$schuljahr,$abschnit
 	while ($obj = $database->fetchObject ($result) ) 
 	{	
 		//bei jedem schuelerleistungsdatensatz das lernabschnittsdatum abfragen. 		
-		$result_la = $database->query("SELECT * FROM schuelerlernabschnittsdaten WHERE ID='". $obj->Abschnitt_ID ."' AND Jahr LIKE '".$schuljahr."' AND Abschnitt LIKE '".$abschnitt."';");
+		$result_la = $database->query("SELECT * FROM SchuelerLernabschnittsdaten WHERE ID='". $obj->Abschnitt_ID ."' AND Jahr LIKE '".$schuljahr."' AND Abschnitt LIKE '".$abschnitt."';");
 		$la_daten = $database->fetchObject ($result_la);
 
 		//falls der schuelerleistungsdatensatz im aktuellen Halbjahr liegt diesen in die Zensurenliste schreiben.
 		if ($la_daten)
 		{	
 			//Schulerdaten abfragen
-			$result_schueler = $database->query("SELECT Name,Vorname FROM schueler WHERE ID='". $la_daten->Schueler_ID ."' AND Status LIKE '2' AND Geloescht LIKE '-';");
+			$result_schueler = $database->query("SELECT Name,Vorname FROM Schueler WHERE ID='". $la_daten->Schueler_ID ."' AND Status LIKE '2' AND Geloescht LIKE '-';");
 			$schueler_daten = $database->fetchObject ($result_schueler);
 			if($schueler_daten->Name)
 			{			
@@ -924,7 +924,7 @@ function update_zensurenliste($database,$zensurenliste)
 
 	foreach ($zensurenliste as $zensur)
 	{					
-		$result = $database->query("SELECT * FROM schuelerleistungsdaten WHERE ID='".$zensur[ID]."';");
+		$result = $database->query("SELECT * FROM SchuelerLeistungsdaten WHERE ID='".$zensur[ID]."';");
 		//echo "<pre>";
 		//print_r($zensur);
 		//echo "</pre>";		
@@ -945,7 +945,7 @@ function update_zensurenliste($database,$zensurenliste)
 
 function get_lernabschnitt_ID($database,$ID,$Jahr,$Abschnitt)
 {
-	$result = $database->query("SELECT ID FROM schuelerlernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
+	$result = $database->query("SELECT ID FROM SchuelerLernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
 	$obj = $database->fetchObject ($result);
 
 	return $obj->ID;
@@ -953,7 +953,7 @@ function get_lernabschnitt_ID($database,$ID,$Jahr,$Abschnitt)
 
 function get_fehlstd($database,$ID,$Jahr,$Abschnitt)
 {
-	$result = $database->query("SELECT SumFehlStd FROM schuelerlernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
+	$result = $database->query("SELECT SumFehlStd FROM SchuelerLernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
 	$obj = $database->fetchObject ($result);
 
 	return $obj->SumFehlStd;
@@ -961,7 +961,7 @@ function get_fehlstd($database,$ID,$Jahr,$Abschnitt)
 
 function get_fehlstdu($database,$ID,$Jahr,$Abschnitt)
 {
-	$result = $database->query("SELECT SumFehlStdU FROM schuelerlernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
+	$result = $database->query("SELECT SumFehlStdU FROM SchuelerLernabschnittsdaten WHERE Schueler_ID='".$ID."' AND Jahr='".$Jahr."' AND Abschnitt='".$Abschnitt."';");	
 	$obj = $database->fetchObject ($result);
 
 	return $obj->SumFehlStdU;
@@ -1043,7 +1043,7 @@ function schuelerDbAbfrage ($database,$sqlquery, $spaltenarray)
 
 function liste_aller_abschnitte($database,$ID)
 {
-	$result = $database->query("SELECT ID FROM schuelerlernabschnittsdaten WHERE Schueler_ID='".$ID."';");	
+	$result = $database->query("SELECT ID FROM SchuelerLernabschnittsdaten WHERE Schueler_ID='".$ID."';");	
 	$i = 0;
 	while ($obj = $database->fetchObject ($result)) 
 	{				
@@ -1059,7 +1059,7 @@ function liste_aller_abschnitte($database,$ID)
 
 function get_faecherliste($database,$jahrgangsid)
 {
-	$result = $database->query("SELECT * FROM schuelerleistungsdaten WHERE Abschnitt_ID='".$jahrgangsid."';");	
+	$result = $database->query("SELECT * FROM SchuelerLeistungsdaten WHERE Abschnitt_ID='".$jahrgangsid."';");	
 	
 	while ($obj = $database->fetchObject ($result)) 
 	{				
@@ -1070,13 +1070,15 @@ function get_faecherliste($database,$jahrgangsid)
 		$returnarray[$obj->ID]['Kursart']=$obj->Kursart;		
 		$returnarray[$obj->ID]['Kurs_ID']=$obj->Kurs_ID;
 		
+		/* Dieser Teil ist nicht aktiv, wenn sie nicht diese Zusätzliche Tabelle webschidl_teilnoten eingestellt haben. 
+		// dies ist aber auch outdated - wird nicht weiterentsickelt, da nun auch in Schild voll implementiert
 		//abfrage der zugehörigen Teilnoten:
-		$resulttn = $database->query("SELECT * FROM webschild_teilnoten WHERE noten_id='". $obj->ID ."';");	
-		while ($objtn = $database->fetchObject ($resulttn)) 
+		 $resulttn = $database->query("SELECT * FROM webschild_teilnoten WHERE noten_id='". $obj->ID ."';");	
+		 while ($objtn = $database->fetchObject ($resulttn)) 
 		{	
 			$returnarray[$obj->ID][$objtn->notentyp] = $objtn->note;
 		}
-		
+		*/
 		$returnarray[$obj->ID]['Endnote']=$obj->NotenKrz;
 		$returnarray[$obj->ID]['Fehlstd']=$obj->Fehlstd;
 		$returnarray[$obj->ID]['uFehlstd']=$obj->uFehlstd;
@@ -1100,6 +1102,7 @@ function get_notenarray($database,$zensurenliste)
 		$notenarray[$zensur['ID']]['Fehlstd'] = $zensur['Fehlstd'];
 		$notenarray[$zensur['ID']]['uFehlstd'] = $zensur['uFehlstd'];
 	
+		/*
 		$result = $database->query("SELECT * FROM webschild_teilnoten WHERE noten_id='".$zensur[ID]."';");	
 				
 		while ($obj = $database->fetchObject ($result)) 
@@ -1109,6 +1112,7 @@ function get_notenarray($database,$zensurenliste)
 				//print_r($obj);
 				//echo "</pre>";	
 			}
+		*/
 	}
 	return $notenarray;
 }
@@ -1124,7 +1128,8 @@ function update_notenarray($database,$zensurenliste)
 		$notenarray[$zensur['ID']]['Endnote'] = $zensur['NotenKrz'];
 		$notenarray[$zensur['ID']]['Fehlstd'] = $zensur['Fehlstd'];
 		$notenarray[$zensur['ID']]['uFehlstd'] = $zensur['uFehlstd'];
-	
+		
+		/*
 		$result = $database->query("SELECT * FROM webschild_teilnoten WHERE noten_id='".$zensur[ID]."';");	
 				
 		while ($obj = $database->fetchObject ($result)) 
@@ -1134,6 +1139,7 @@ function update_notenarray($database,$zensurenliste)
 				//print_r($obj);
 				//echo "</pre>";	
 			}
+		*/
 	}
 	return $notenarray;
 }
@@ -1169,7 +1175,7 @@ function get_schild_noteneinstellungen($database)
 {
 	try 
 	{
-		$result = $database->query("SELECT NotenGesperrt FROM eigeneschule ");
+		$result = $database->query("SELECT NotenGesperrt FROM EigeneSchule ");
 	}
 	catch (DatabaseException $e) 
 	{

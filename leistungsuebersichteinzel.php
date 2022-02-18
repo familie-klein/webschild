@@ -32,7 +32,7 @@ if($_GET['id'])
 	//schüler-Daten aus der Mysql-db holen
 	try 
 	{
-		$result = $database->query("SELECT * FROM schueler WHERE ID='" .$_GET['id']. "'");
+		$result = $database->query("SELECT * FROM Schueler WHERE ID='" .$_GET['id']. "'");
 		$obj =  $database->fetchObject ($result);
 	}
 	catch (DatabaseException $e) 
